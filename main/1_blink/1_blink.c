@@ -1,9 +1,4 @@
 #include "1_blink.h"
-#include <stdio.h>
-#include "driver/gpio.h"
-#include "esp_log.h"
-#include "led_strip.h"
-#include "sdkconfig.h"
 
 static const char *TAG = "blink";
 
@@ -51,7 +46,7 @@ void blink_led(void* params)
 
         ESP_LOGI(TAG, "Uloha 1: TaskTurning the LED %s!", s_led_state == true ? "ON" : "OFF");
 
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
+        vTaskDelay(getBlinkPeriod() / portTICK_PERIOD_MS);
     }
     
     vTaskDelete(NULL);
