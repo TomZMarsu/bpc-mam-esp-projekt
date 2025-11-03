@@ -9,6 +9,7 @@
 #include "unixtime.h"
 #include "../4_per_change/4_per_change.h"
 #include "../6_rng/6_rng.h"
+#include "../9_temp/9_temp.h"
 
 #define COMMAND_QUEUE_SIZE 3
 #define GPIO_TX      (43)

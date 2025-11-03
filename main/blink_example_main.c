@@ -56,8 +56,4 @@ void app_main(void)
     // ULOHA 7: START
     print_mac();
     // ULOHA 7: KONEC
-
-    // ULOHA 9: START
-    xTaskCreate(temp_call_handle, "u9_measure_temp", 2048, NULL, 1, NULL)
-    // ULOHA 9: KONEC
 }

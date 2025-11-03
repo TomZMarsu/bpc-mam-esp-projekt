@@ -1,8 +1,8 @@
 #ifndef TEMP_H
 #define TEMP_H
 
-void measure_temp();
+#include "../5_unixtime/uart_commandHandler.h"
 
-void temp_call_handle();
+void measure_temp();
 
 #endif
