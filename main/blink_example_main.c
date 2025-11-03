@@ -162,7 +162,14 @@ void eh_set_device_ip(void* arg, esp_event_base_t event_base, int32_t event_id, 
 
 void t_printIP(void* params) {
     while(1) {
-        if(xEventGroupGetBits(s_wifi_event_group)==WIFI_CONNECTED_BIT) {
+        EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
+            WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
+            pdFALSE,
+            pdFALSE,
+            portMAX_DELAY);
+        
+
+        if(bits & WIFI_CONNECTED_BIT) {
             ESP_LOGI(TAG, "Uloha 2: IP adresa je ", ipAddr);
         }
 
@@ -268,7 +275,7 @@ void app_main(void)
 
     xTaskCreate(blink_led, "u1_blink_led", 2048, NULL, 1, NULL);
 
-    xTaskCreate(t_printIP, "u2_t_printIP", 1024, NULL, 1, NULL); 
+    //xTaskCreate(t_printIP, "u2_t_printIP", 1024, NULL, 1, NULL); 
 
     // ULOHA 1: KONEC 
 }
