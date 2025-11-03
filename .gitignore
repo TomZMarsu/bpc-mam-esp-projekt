@@ -15,6 +15,7 @@ CMakeUserPresets.json
 sdkconfig
 sdkconfig_bak
 sdkconfig.old
+.vscode/
 
 # CLion
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
