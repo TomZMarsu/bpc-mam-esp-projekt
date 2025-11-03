@@ -180,6 +180,7 @@ void t_printIP(void* params) {
 }
 
 void init_wifi() {
+    ESP_LOGI(TAG, "Uloha2: init_wifi");
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
@@ -271,11 +272,19 @@ void app_main(void)
 {
 
     // ULOHA 1: START
-    
-
     xTaskCreate(blink_led, "u1_blink_led", 2048, NULL, 1, NULL);
-
-    //xTaskCreate(t_printIP, "u2_t_printIP", 1024, NULL, 1, NULL); 
-
     // ULOHA 1: KONEC 
+
+    // ULOHA 2: START
+    //Initialize NVS
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+      ESP_ERROR_CHECK(nvs_flash_erase());
+      ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    init_wifi();
+    //xTaskCreate(t_printIP, "u2_t_printIP", 1024, NULL, 1, NULL); 
+    // ULOHA 2: KONEC
 }
