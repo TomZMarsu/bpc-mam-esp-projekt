@@ -9,9 +9,7 @@
 
 static const char *TAG = "RND_NUMBERS";
 
-void generate_random_number(void)
-{
-    while (1) {
+void generate_random_number(void) {
         bootloader_random_enable();
 
         uint32_t random_high = esp_random();
@@ -20,6 +18,12 @@ void generate_random_number(void)
         ESP_LOGI(TAG, "ULOHA 6: Random number: 0x%016llX", random_num);
 
         bootloader_random_disable();
+}
+
+void rng_call_handle() {
+    while (1) {
+        // TODO: handle `RANDOM?` request from UART
+        // generate_random_number();
     }
 
     vTaskDelete(NULL);

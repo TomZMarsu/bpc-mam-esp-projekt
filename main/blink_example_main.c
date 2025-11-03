@@ -53,7 +53,7 @@ void app_main(void)
     // ULOHA 4: KONEC
 
     // ULOHA 6: START
-    xTaskCreate(generate_random_number, "u6_rng", 2048, NULL, 1, NULL);
+    xTaskCreate(rng_call_handle, "u6_rng", 2048, NULL, 1, NULL);
     // ULOHA 6: KONEC
 
     //ULOHA 7: START
