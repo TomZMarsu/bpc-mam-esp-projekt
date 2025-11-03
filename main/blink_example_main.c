@@ -17,6 +17,7 @@
 #include "1_blink/1_blink.h"
 #include "2_wifi/2_wifi.h"
 #include "3_ntp/3_ntp.h"
+#include "7_mac/7_mac.h"
 
 #include "4_per_change/4_per_change.h"
 #include "4_per_change/blinkPeriod.h"
@@ -49,4 +50,8 @@ void app_main(void)
     // ULOHA 4: START
     xTaskCreate(period_changer, "u4_period_changer", 2048, NULL, 1, NULL);
     // ULOHA 4: KONEC
+
+    //ULOHA 7: START
+    print_mac();
+    //ULOHA 7: KONEC
 }
