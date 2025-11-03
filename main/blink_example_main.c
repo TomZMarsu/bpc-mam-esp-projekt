@@ -17,6 +17,7 @@
 #include "1_blink/1_blink.h"
 #include "2_wifi/2_wifi.h"
 #include "3_ntp/3_ntp.h"
+#include "6_rng/6_rng.h"
 #include "7_mac/7_mac.h"
 #include "9_temp/9_temp.h"
 
@@ -47,14 +48,14 @@ void app_main(void)
     // ULOHA 3: START
     xTaskCreate(fetch_print_time, "u3_ntp", 2048, NULL, 1, NULL);
     // ULOHA 3: KONEC
-  
-    // ULOHA 4: START
-    xTaskCreate(period_changer, "u4_period_changer", 2048, NULL, 1, NULL);
-    // ULOHA 4: KONEC
 
-    //ULOHA 7: START
-    print_mac;
-    //ULOHA 7: KONEC
+    // ULOHA 5: START
+    xTaskCreate(uart_commandHandler, "u5_uart_commandHandler", 2048, NULL, 1, NULL);
+    // ULOHA 5: KONEC
+
+    // ULOHA 7: START
+    print_mac();
+    // ULOHA 7: KONEC
 
     // ULOHA 9: START
     xTaskCreate(temp_call_handle, "u9_measure_temp", 2048, NULL, 1, NULL)
