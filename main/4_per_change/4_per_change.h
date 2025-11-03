@@ -8,13 +8,7 @@
 #include "blinkPeriod.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-
-#define GPIO_TX      (43)
-#define GPIO_RX     (44)
-#define ECHO_TEST_RTS  (UART_PIN_NO_CHANGE)
-#define ECHO_TEST_CTS  (UART_PIN_NO_CHANGE)
-
-#define BUF_SIZE (1024)
+#include "uart_commandHandler.h"
 
 bool cmp_buffer(char* prefix, uint8_t* buffer);
 int uint8_t_to_int(uint8_t buf_element);
