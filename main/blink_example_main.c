@@ -118,7 +118,7 @@ void blink_led(void* params)
 
         s_led_state = !s_led_state;
 
-        ESP_LOGI(TAG, "Uloha1: TaskTurning the LED %s!", s_led_state == true ? "ON" : "OFF");
+        ESP_LOGI(TAG, "Uloha 1: TaskTurning the LED %s!", s_led_state == true ? "ON" : "OFF");
 
         vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
     }
@@ -152,35 +152,14 @@ void eh_wifi_init(void* arg, esp_event_base_t event_base, int32_t event_id, void
 void eh_set_device_ip(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data) {
     if(event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
-        ipAddr = IP2STR(&event->ip_info.ip);
+        ESP_LOGI(TAG,"Uloha 2: IP Adresa je " IPSTR, IP2STR(&event->ip_info.ip));
 
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
     }
 }
 
-
-
-void t_printIP(void* params) {
-    while(1) {
-        EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
-            WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
-            pdFALSE,
-            pdFALSE,
-            portMAX_DELAY);
-        
-
-        if(bits & WIFI_CONNECTED_BIT) {
-            ESP_LOGI(TAG, "Uloha 2: IP adresa je ", ipAddr);
-        }
-
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
-    }
-
-    vTaskDelete(NULL);
-}
-
 void init_wifi() {
-    ESP_LOGI(TAG, "Uloha2: init_wifi");
+    ESP_LOGI(TAG, "Uloha 2: init_wifi");
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
@@ -285,6 +264,5 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     init_wifi();
-    //xTaskCreate(t_printIP, "u2_t_printIP", 1024, NULL, 1, NULL); 
     // ULOHA 2: KONEC
 }
