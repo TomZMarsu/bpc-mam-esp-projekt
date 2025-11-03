@@ -18,11 +18,15 @@
 #include "2_wifi/2_wifi.h"
 #include "3_ntp/3_ntp.h"
 
+#include "4_per_change/4_per_change.h"
+#include "4_per_change/blinkPeriod.h"
+
 static const char *TAG = "example";
 
 void app_main(void)
 {
     // ULOHA 1: START
+    initBlinkPeriod(1000);
     xTaskCreate(blink_led, "u1_blink_led", 2048, NULL, 1, NULL);
     // ULOHA 1: KONEC 
 
@@ -41,4 +45,8 @@ void app_main(void)
     // ULOHA 3: START
     xTaskCreate(fetch_print_time, "u3_ntp", 2048, NULL, 1, NULL);
     // ULOHA 3: KONEC
+  
+    // ULOHA 4: START
+    xTaskCreate(period_changer, "u4_period_changer", 2048, NULL, 1, NULL);
+    // ULOHA 4: KONEC
 }
