@@ -47,16 +47,12 @@ void app_main(void)
     // ULOHA 3: START
     xTaskCreate(fetch_print_time, "u3_ntp", 2048, NULL, 1, NULL);
     // ULOHA 3: KONEC
-  
-    // ULOHA 4: START
-    xTaskCreate(period_changer, "u4_period_changer", 2048, NULL, 1, NULL);
-    // ULOHA 4: KONEC
 
-    // ULOHA 6: START
-    xTaskCreate(rng_call_handle, "u6_rng", 2048, NULL, 1, NULL);
-    // ULOHA 6: KONEC
+    // ULOHA 5: START
+    xTaskCreate(uart_commandHandler, "u5_uart_commandHandler", 2048, NULL, 1, NULL);
+    // ULOHA 5: KONEC
 
-    //ULOHA 7: START
+    // ULOHA 7: START
     print_mac();
-    //ULOHA 7: KONEC
+    // ULOHA 7: KONEC
 }
