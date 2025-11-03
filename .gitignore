@@ -12,6 +12,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+sdkconfig
+sdkconfig_bak
+sdkconfig.old
 
 # CLion
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
