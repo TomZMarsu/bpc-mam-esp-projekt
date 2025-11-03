@@ -39,6 +39,6 @@ void app_main(void)
     // ULOHA 2: KONEC
 
     // ULOHA 3: START
-    fetch_print_time();
+    xTaskCreate(fetch_print_time, "u3_ntp", 2048, NULL, 1, NULL);
     // ULOHA 3: KONEC
 }
