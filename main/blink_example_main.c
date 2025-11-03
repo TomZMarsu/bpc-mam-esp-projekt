@@ -17,6 +17,7 @@
 #include "1_blink/1_blink.h"
 #include "2_wifi/2_wifi.h"
 #include "3_ntp/3_ntp.h"
+#include "7_mac/7_mac.h"
 
 static const char *TAG = "example";
 
@@ -41,4 +42,8 @@ void app_main(void)
     // ULOHA 3: START
     xTaskCreate(fetch_print_time, "u3_ntp", 2048, NULL, 1, NULL);
     // ULOHA 3: KONEC
+
+    //ULOHA 7: START
+    print_mac();
+    //ULOHA 7: KONEC
 }
