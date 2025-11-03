@@ -17,6 +17,7 @@
 #include "1_blink/1_blink.h"
 #include "2_wifi/2_wifi.h"
 #include "3_ntp/3_ntp.h"
+#include "6_rng/6_rng.h"
 #include "7_mac/7_mac.h"
 
 #include "4_per_change/4_per_change.h"
@@ -50,4 +51,8 @@ void app_main(void)
     // ULOHA 5: START
     xTaskCreate(uart_commandHandler, "u5_uart_commandHandler", 2048, NULL, 1, NULL);
     // ULOHA 5: KONEC
+
+    // ULOHA 7: START
+    print_mac();
+    // ULOHA 7: KONEC
 }
