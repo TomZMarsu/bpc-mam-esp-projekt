@@ -11,7 +11,6 @@
 #include "freertos/task.h"
 #include "driver/gpio.h"
 #include "esp_system.h"
-#include "esp_log.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "esp_log.h"
@@ -21,6 +20,9 @@
 
 #include "lwip/err.h"
 #include "lwip/sys.h"
+
+#include "4_per_change/4_per_change.h"
+#include "4_per_change/blinkPeriod.h"
 
 static const char *TAG = "example";
 
@@ -120,7 +122,7 @@ void blink_led(void* params)
 
         ESP_LOGI(TAG, "Uloha 1: TaskTurning the LED %s!", s_led_state == true ? "ON" : "OFF");
 
-        vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
+        vTaskDelay(getBlinkPeriod() / portTICK_PERIOD_MS);
     }
     
     vTaskDelete(NULL);
@@ -251,6 +253,7 @@ void app_main(void)
 {
 
     // ULOHA 1: START
+    initBlinkPeriod(1000);
     xTaskCreate(blink_led, "u1_blink_led", 2048, NULL, 1, NULL);
     // ULOHA 1: KONEC 
 
@@ -265,4 +268,8 @@ void app_main(void)
 
     init_wifi();
     // ULOHA 2: KONEC
+
+    // ULOHA 4: START
+    xTaskCreate(period_changer, "u4_period_changer", 2048, NULL, 1, NULL);
+    // ULOHA 4: KONEC
 }
