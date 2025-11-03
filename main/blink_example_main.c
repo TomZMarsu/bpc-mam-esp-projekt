@@ -50,4 +50,8 @@ void app_main(void)
     // ULOHA 5: START
     xTaskCreate(uart_commandHandler, "u5_uart_commandHandler", 2048, NULL, 1, NULL);
     // ULOHA 5: KONEC
+
+    // ULOHA 7: START
+    print_mac();
+    // ULOHA 7: KONEC
 }
