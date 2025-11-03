@@ -21,6 +21,7 @@
 
 #include "lwip/err.h"
 #include "lwip/sys.h"
+#include "3_ntp.h"
 
 static const char *TAG = "example";
 
@@ -265,4 +266,8 @@ void app_main(void)
 
     init_wifi();
     // ULOHA 2: KONEC
+
+    // ULOHA 3: START
+    fetch_print_time();
+    // ULOHA 3: KONEC
 }
