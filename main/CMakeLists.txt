@@ -4,5 +4,7 @@ idf_component_register(SRCS "blink_example_main.c"
                             "3_ntp/3_ntp.c"
                             "4_per_change/4_per_change.c"
                             "4_per_change/blinkPeriod.c"
+                            "5_unixtime/uart_commandHandler.c"
+                            "5_unixtime/unixtime.c"
                             "7_mac/7_mac.c"
-                       INCLUDE_DIRS "." "1_blink" "2_wifi" "3_ntp" "4_per_change" "7_mac")
+                       INCLUDE_DIRS "." "1_blink" "2_wifi" "3_ntp" "4_per_change" "5_unixtime")
