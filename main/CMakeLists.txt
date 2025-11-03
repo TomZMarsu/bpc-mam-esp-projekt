@@ -8,4 +8,5 @@ idf_component_register(SRCS "blink_example_main.c"
                             "5_unixtime/uart_commandHandler.c"
                             "6_rng/6_rng.c"
                             "7_mac/7_mac.c"
-                       INCLUDE_DIRS "." "1_blink" "2_wifi" "3_ntp" "4_per_change" "7_mac" "5_unixtime" "6_rng")
+                            "9_temp/9_temp.c"
+                       INCLUDE_DIRS "." "1_blink" "2_wifi" "3_ntp" "4_per_change" "5_unixtime" "6_rng" "7_mac" "9_temp")

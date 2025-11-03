@@ -19,6 +19,7 @@
 #include "3_ntp/3_ntp.h"
 #include "6_rng/6_rng.h"
 #include "7_mac/7_mac.h"
+#include "9_temp/9_temp.h"
 
 #include "4_per_change/4_per_change.h"
 #include "4_per_change/blinkPeriod.h"
