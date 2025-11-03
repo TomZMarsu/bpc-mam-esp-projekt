@@ -69,34 +69,34 @@ void print_mac() {
 #endif
 
     //Set the base MAC address using the retrieved MAC address
-    ESP_LOGI(TAG, "Using \"0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x\" as base MAC address",
+    ESP_LOGI(TAG, "ULOHA 7: Using \"%x:%x:%x:%x:%x:%x\" as base MAC address",
              base_mac_addr[0], base_mac_addr[1], base_mac_addr[2], base_mac_addr[3], base_mac_addr[4], base_mac_addr[5]);
     esp_base_mac_addr_set(base_mac_addr);
 
-    //Get the derived MAC address for each network interface
-    uint8_t derived_mac_addr[6] = {0};
-    //Get MAC address for WiFi Station interface
-    ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_WIFI_STA));
-    ESP_LOGI("WIFI_STA MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
-             derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
-             derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
+    // //Get the derived MAC address for each network interface
+    // uint8_t derived_mac_addr[6] = {0};
+    // //Get MAC address for WiFi Station interface
+    // ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_WIFI_STA));
+    // ESP_LOGI("WIFI_STA MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
+    //          derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
+    //          derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
 
-    //Get MAC address for SoftAp interface
-    ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_WIFI_SOFTAP));
-    ESP_LOGI("SoftAP MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
-             derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
-             derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
+    // //Get MAC address for SoftAp interface
+    // ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_WIFI_SOFTAP));
+    // ESP_LOGI("SoftAP MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
+    //          derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
+    //          derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
 
-    //Get MAC address for Bluetooth
-    ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_BT));
-    ESP_LOGI("BT MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
-             derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
-             derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
+    // //Get MAC address for Bluetooth
+    // ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_BT));
+    // ESP_LOGI("BT MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
+    //          derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
+    //          derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
 
-    //Get MAC address for Ethernet
-    ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_ETH));
-    ESP_LOGI("Ethernet MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
-             derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
-             derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
+    // //Get MAC address for Ethernet
+    // ESP_ERROR_CHECK(esp_read_mac(derived_mac_addr, ESP_MAC_ETH));
+    // ESP_LOGI("Ethernet MAC", "0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
+    //          derived_mac_addr[0], derived_mac_addr[1], derived_mac_addr[2],
+    //          derived_mac_addr[3], derived_mac_addr[4], derived_mac_addr[5]);
 
 }
