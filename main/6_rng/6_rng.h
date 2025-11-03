@@ -1,7 +1,8 @@
 #ifndef RNG_H
 #define RNG_H
 
+#include "../5_unixtime/uart_commandHandler.h"
+
 void generate_random_number();
-void rng_call_handle();
 
 #endif//RNG_H

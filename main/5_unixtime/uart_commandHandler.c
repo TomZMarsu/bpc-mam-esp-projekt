@@ -49,6 +49,7 @@ void init_command_queues() {
 void init_command_tasks() {
     xTaskCreate(period_changer, "u4_period_changer", 2048, NULL, 1, NULL);
     xTaskCreate(unixtime_printer, "u5_unixtime_printer", 2048, NULL, 1, NULL);
+    xTaskCreate(generate_random_number, "u6_rng", 2048, NULL, 1, NULL);
 }
 
 bool isThatCommand(char* commandName, uint8_t* buf, int buf_len) {

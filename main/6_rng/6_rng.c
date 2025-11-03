@@ -10,21 +10,19 @@
 static const char *TAG = "RND_NUMBERS";
 
 void generate_random_number(void) {
-        bootloader_random_enable();
+    QueueHandle_t cmd_queue = get_random_queueHandle();
 
-        uint32_t random_high = esp_random();
-        uint32_t random_low = esp_random();
-        uint64_t random_num = ((uint64_t)random_high << 32) | random_low;
-        ESP_LOGI(TAG, "ULOHA 6: Random number: 0x%016llX", random_num);
+    while(1) {
+        bool true_flag;
+        if(xQueueReceive(cmd_queue, &true_flag, portMAX_DELAY)) {
+            bootloader_random_enable();
 
-        bootloader_random_disable();
-}
+            uint32_t random_high = esp_random();
+            uint32_t random_low = esp_random();
+            uint64_t random_num = ((uint64_t)random_high << 32) | random_low;
+            ESP_LOGI(TAG, "ULOHA 6: Random number: 0x%016llX", random_num);
 
-void rng_call_handle() {
-    while (1) {
-        // TODO: handle `RANDOM?` request from UART
-        // generate_random_number();
+            bootloader_random_disable();
+        }
     }
-
-    vTaskDelete(NULL);
 }
