@@ -18,6 +18,7 @@
 #include "2_wifi/2_wifi.h"
 #include "3_ntp/3_ntp.h"
 #include "7_mac/7_mac.h"
+#include "9_temp/9_temp.h"
 
 #include "4_per_change/4_per_change.h"
 #include "4_per_change/blinkPeriod.h"
@@ -52,6 +53,10 @@ void app_main(void)
     // ULOHA 4: KONEC
 
     //ULOHA 7: START
-    print_mac();
+    print_mac;
     //ULOHA 7: KONEC
+
+    // ULOHA 9: START
+    xTaskCreate(temp_call_handle, "u9_measure_temp", 2048, NULL, 1, NULL)
+    // ULOHA 9: KONEC
 }
