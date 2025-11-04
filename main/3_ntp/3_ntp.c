@@ -77,6 +77,57 @@ void obtain_time(void)
     localtime_r(&now, &timeinfo);
 }
 
+void fetch_time(time_t *now, struct tm *timeinfo) {
+    time(now);
+    localtime_r(now, timeinfo);
+    // Is time set? If not, tm_year will be (1970 - 1900).
+    if (timeinfo->tm_year < (2016 - 1900)) {
+        ESP_LOGI(TAG, "Time is not set yet. Connecting to WiFi and getting time over NTP.");
+        obtain_time();
+        // update 'now' variable with current time
+        time(now);
+        localtime_r(now, timeinfo);
+    }
+    #ifdef CONFIG_SNTP_TIME_SYNC_METHOD_SMOOTH
+    else {
+        // add 500 ms error to the current system time.
+        // Only to demonstrate a work of adjusting method!
+        {
+            ESP_LOGI(TAG, "Add a error for test adjtime");
+            struct timeval tv_now;
+            gettimeofday(&tv_now, NULL);
+            int64_t cpu_time = (int64_t)tv_now.tv_sec * 1000000L + (int64_t)tv_now.tv_usec;
+            int64_t error_time = cpu_time + 500 * 1000L;
+            struct timeval tv_error = { .tv_sec = error_time / 1000000L, .tv_usec = error_time % 1000000L };
+            settimeofday(&tv_error, NULL);
+        }
+
+        ESP_LOGI(TAG, "Time was set, now just adjusting it. Use SMOOTH SYNC method.");
+        obtain_time();
+        // update 'now' variable with current time
+        time(now);
+        localtime_r(now, timeinfo);
+    }
+    #endif
+
+    // Set timezone
+    setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
+    tzset();
+    localtime_r(now, timeinfo);
+
+    if (sntp_get_sync_mode() == SNTP_SYNC_MODE_SMOOTH) {
+        struct timeval outdelta;
+        while (sntp_get_sync_status() == SNTP_SYNC_STATUS_IN_PROGRESS) {
+            adjtime(NULL, &outdelta);
+            ESP_LOGI(TAG, "Waiting for adjusting time ... outdelta = %li sec: %li ms: %li us",
+                        (long)outdelta.tv_sec,
+                        outdelta.tv_usec/1000,
+                        outdelta.tv_usec%1000);
+            vTaskDelay(2000 / portTICK_PERIOD_MS);
+        }
+    }
+}
+
 void fetch_print_time() {
     // TODO: je bootcount dulezity pro spravnou aktualizaci casu?
     ++boot_count;
@@ -85,57 +136,13 @@ void fetch_print_time() {
     while (1) {
         time_t now;
         struct tm timeinfo;
-        time(&now);
-        localtime_r(&now, &timeinfo);
-        // Is time set? If not, tm_year will be (1970 - 1900).
-        if (timeinfo.tm_year < (2016 - 1900)) {
-            ESP_LOGI(TAG, "Time is not set yet. Connecting to WiFi and getting time over NTP.");
-            obtain_time();
-            // update 'now' variable with current time
-            time(&now);
-        }
-        #ifdef CONFIG_SNTP_TIME_SYNC_METHOD_SMOOTH
-        else {
-            // add 500 ms error to the current system time.
-            // Only to demonstrate a work of adjusting method!
-            {
-                ESP_LOGI(TAG, "Add a error for test adjtime");
-                struct timeval tv_now;
-                gettimeofday(&tv_now, NULL);
-                int64_t cpu_time = (int64_t)tv_now.tv_sec * 1000000L + (int64_t)tv_now.tv_usec;
-                int64_t error_time = cpu_time + 500 * 1000L;
-                struct timeval tv_error = { .tv_sec = error_time / 1000000L, .tv_usec = error_time % 1000000L };
-                settimeofday(&tv_error, NULL);
-            }
-
-            ESP_LOGI(TAG, "Time was set, now just adjusting it. Use SMOOTH SYNC method.");
-            obtain_time();
-            // update 'now' variable with current time
-            time(&now);
-        }
-        #endif
         char strftime_buf[64];
 
-        // Set timezone and print local time
-        setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
-        tzset();
-        localtime_r(&now, &timeinfo);
+        fetch_time(&now, &timeinfo);
         strftime(strftime_buf, sizeof(strftime_buf), "%Y-%m-%d %H:%M:%S", &timeinfo);
         ESP_LOGI(TAG, "ULOHA 3: The current date/time is: %s", strftime_buf);
 
-        if (sntp_get_sync_mode() == SNTP_SYNC_MODE_SMOOTH) {
-            struct timeval outdelta;
-            while (sntp_get_sync_status() == SNTP_SYNC_STATUS_IN_PROGRESS) {
-                adjtime(NULL, &outdelta);
-                ESP_LOGI(TAG, "Waiting for adjusting time ... outdelta = %li sec: %li ms: %li us",
-                            (long)outdelta.tv_sec,
-                            outdelta.tv_usec/1000,
-                            outdelta.tv_usec%1000);
-                vTaskDelay(2000 / portTICK_PERIOD_MS);
-            }
-        }
-
-    vTaskDelay(TIME_FETCH_PER / portTICK_PERIOD_MS);
+        vTaskDelay(TIME_FETCH_PER / portTICK_PERIOD_MS);
     }
 
     vTaskDelete(NULL);
