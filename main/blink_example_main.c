@@ -20,6 +20,7 @@
 #include "6_rng/6_rng.h"
 #include "7_mac/7_mac.h"
 #include "9_temp/9_temp.h"
+#include "10_wave_gen/10_wave_gen.h"
 
 #include "4_per_change/4_per_change.h"
 #include "4_per_change/blinkPeriod.h"
@@ -56,4 +57,8 @@ void app_main(void)
     // ULOHA 7: START
     print_mac();
     // ULOHA 7: KONEC
+
+    // ULOHA 10: START - Sine wave generation on GPIO17
+    xTaskCreate(start_sine_wave_task, "u10_wave_gen", 4096, NULL, 5, NULL);
+    // ULOHA 10: KONEC
 }
