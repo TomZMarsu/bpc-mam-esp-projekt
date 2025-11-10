@@ -9,4 +9,5 @@ idf_component_register(SRCS "blink_example_main.c"
                             "6_rng/6_rng.c"
                             "7_mac/7_mac.c"
                             "9_temp/9_temp.c"
-                       INCLUDE_DIRS "." "1_blink" "2_wifi" "3_ntp" "4_per_change" "5_unixtime" "6_rng" "7_mac" "9_temp")
+                            "10_wave_gen/10_wave_gen.c"
+                       INCLUDE_DIRS "." "1_blink" "2_wifi" "3_ntp" "4_per_change" "5_unixtime" "6_rng" "7_mac" "9_temp" "10_wave_gen")
