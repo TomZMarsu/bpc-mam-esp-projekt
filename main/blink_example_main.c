@@ -13,6 +13,9 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 
+// uloha 8 - logovani
+#include "esp_log.h"
+
 // include vsech uloh
 #include "1_blink/1_blink.h"
 #include "2_wifi/2_wifi.h"
@@ -29,6 +32,22 @@ static const char *TAG = "example";
 
 void app_main(void)
 {
+    // ULOHA 8: LOGOVANI - Keep only our application logs
+    // Note: Global esp_log_level_set("*", ESP_LOG_NONE) not needed - sdkconfig sets default to NONE
+    
+    // Enable logging ONLY for our own application tags
+    esp_log_level_set("example", ESP_LOG_INFO);
+    esp_log_level_set("blink", ESP_LOG_INFO);
+    esp_log_level_set("APP_WIFI", ESP_LOG_INFO);  // Changed from "wifi" to avoid ESP-IDF wifi component conflict
+    esp_log_level_set("ntp", ESP_LOG_INFO);
+    esp_log_level_set("RND_NUMBERS", ESP_LOG_INFO);
+    esp_log_level_set("unixtime", ESP_LOG_INFO);
+    esp_log_level_set("sine_wave", ESP_LOG_INFO);
+    esp_log_level_set("BASE_MAC", ESP_LOG_INFO);
+    esp_log_level_set("temperature_sensor", ESP_LOG_INFO);
+    esp_log_level_set("Uloha 4", ESP_LOG_INFO);
+    esp_log_level_set("Uloha 5", ESP_LOG_INFO);
+
     // ULOHA 1: START
     initBlinkPeriod(1000);
     xTaskCreate(blink_led, "u1_blink_led", 2048, NULL, 1, NULL);

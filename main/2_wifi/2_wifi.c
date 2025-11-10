@@ -11,7 +11,7 @@
 #include "lwip/sys.h"
 #include "sdkconfig.h"
 
-static const char *TAG = "wifi";
+static const char *TAG = "APP_WIFI";  // Changed from "wifi" to avoid conflict with ESP-IDF wifi component
 
 #define EXAMPLE_ESP_WIFI_SSID      CONFIG_ESP_WIFI_SSID
 #define EXAMPLE_ESP_WIFI_PASS      CONFIG_ESP_WIFI_PASSWORD

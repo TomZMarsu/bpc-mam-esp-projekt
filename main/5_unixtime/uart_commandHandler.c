@@ -35,7 +35,8 @@ void init_uart() {
     uart_set_pin(UART_NUM_0, GPIO_TX, GPIO_RX, ECHO_TEST_RTS, ECHO_TEST_CTS);
     uart_driver_install(UART_NUM_0, BUF_SIZE * 2, 0, 0, NULL, 0);
 
-    esp_log_level_set("*", ESP_LOG_INFO);
+    // ULOHA 8: Do NOT enable all logs here - keep system logs suppressed
+    // esp_log_level_set("*", ESP_LOG_INFO);  // REMOVED - was re-enabling ALL system logs!
 }
 
 void init_command_queues() {
